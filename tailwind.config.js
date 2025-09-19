@@ -1,18 +1,15 @@
 module.exports = {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}"
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
+    "./src/styles/tailwind.css" // ✅ 加上你的 CSS 文件路径
   ],
   theme: {
-  extend: {
-    colors: {
-      primary: '#7C3AED',
-      surface: 'rgba(255,255,255,0.05)',
-    },
-    fontFamily: {
-      sans: ['Inter', 'sans-serif'],
+    extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
     },
   },
-},
   plugins: [],
 }
-
