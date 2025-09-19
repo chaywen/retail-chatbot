@@ -4,7 +4,7 @@ import { Cog6ToothIcon, FolderIcon, ChatBubbleLeftRightIcon } from '@heroicons/r
 
 export default function Sidebar() {
   return (
-    <div className="w-1/4 bg-gradient-to-b from-black via-zinc-900 to-purple-900 text-white p-4 flex flex-col justify-between h-screen font-sans">
+    <div className="w-1/4 h-screen bg-gradient-to-b from-black via-zinc-900 to-purple-900 text-white p-4 flex flex-col justify-between font-sans">
       <div>
         <img src={logo} alt="LameBot Logo" className="h-10 w-auto mb-4" />
 
