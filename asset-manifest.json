@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/retail-chatbot/static/css/main.f50a1d95.css",
-    "main.js": "/retail-chatbot/static/js/main.2fd4d99d.js",
+    "main.css": "/retail-chatbot/static/css/main.cb306a98.css",
+    "main.js": "/retail-chatbot/static/js/main.3d1b8bb2.js",
+    "static/media/logo.svg": "/retail-chatbot/static/media/logo.4c1a893f6499b29f9260919c925fabc4.svg",
     "index.html": "/retail-chatbot/index.html",
-    "main.f50a1d95.css.map": "/retail-chatbot/static/css/main.f50a1d95.css.map",
-    "main.2fd4d99d.js.map": "/retail-chatbot/static/js/main.2fd4d99d.js.map"
+    "main.cb306a98.css.map": "/retail-chatbot/static/css/main.cb306a98.css.map",
+    "main.3d1b8bb2.js.map": "/retail-chatbot/static/js/main.3d1b8bb2.js.map"
   },
   "entrypoints": [
-    "static/css/main.f50a1d95.css",
-    "static/js/main.2fd4d99d.js"
+    "static/css/main.cb306a98.css",
+    "static/js/main.3d1b8bb2.js"
   ]
 }
