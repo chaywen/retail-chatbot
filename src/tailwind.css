@@ -22,3 +22,11 @@
   animation: pulse-radial 8s ease-in-out infinite;
   filter: blur(60px);
 }
+
+/* ✅ 页面尺寸修复 */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
