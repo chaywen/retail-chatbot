@@ -13,11 +13,11 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="relative flex flex-col h-screen bg-white overflow-hidden font-sans">
+    <div className="relative flex flex-col flex-1 bg-white overflow-hidden font-sans">
       {/* Radial layers */}
       <div className="radial-layer w-96 h-96 top-10 left-20 animate-[pulse-radial_8s_ease-in-out_infinite]"></div>
       <div className="radial-layer w-72 h-72 top-40 right-10 animate-[pulse-radial_10s_ease-in-out_infinite]"></div>
-      <div className="radial-layer w-64 h-64 bottom-20 left-1/2 -translate-x-1/2 animate-[pulse-radial_12s_ease-in-out_infinite]"></div>
+      <div className="radial-layer w-64 h-64 bottom-20 left-1/2 animate-[pulse-radial_12s_ease-in-out_infinite]"></div>
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center flex-1 text-center space-y-3 px-4">
@@ -30,7 +30,7 @@ export default function ChatWindow() {
       </div>
 
       {/* Input */}
-      <div className="relative z-10 mt-auto flex items-center bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700 mx-4 mb-6">
+      <div className="relative z-10 mt-4 flex items-center bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700 mx-4 mb-6">
         <PaperClipIcon className="h-5 w-5 text-gray-300 hover:text-white mr-3 cursor-pointer" />
         <input
           type="text"
