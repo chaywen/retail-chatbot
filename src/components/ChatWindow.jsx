@@ -16,7 +16,7 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col flex-1 bg-gradient-to-b from-white to-gray-100 p-6 font-sans">
+    <div className="flex flex-col flex-1 bg-gradient-to-r from-purple-100 via-pink-200 to-blue-100 animate-gradient-x p-6 font-sans backdrop-blur-md">
       <div className="self-center mb-4 bg-purple-100 text-purple-800 px-6 py-2 rounded-full font-semibold shadow-md text-sm tracking-wide">
         General
       </div>
