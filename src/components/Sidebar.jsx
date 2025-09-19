@@ -1,11 +1,10 @@
-
 import React from 'react';
 import logo from '../assets/logo.svg';
-import { Cog6ToothIcon } from '@heroicons/react/24/outline';
+import { Cog6ToothIcon, FolderIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
   return (
-    <div className="w-1/4 bg-gradient-to-b from-black via-purple-900 to-purple-800 text-white p-4 flex flex-col justify-between h-screen font-sans">
+    <div className="w-1/4 bg-gradient-to-b from-black via-zinc-900 to-purple-900 text-white p-4 flex flex-col justify-between h-screen font-sans">
       <div>
         <img src={logo} alt="LameBot Logo" className="h-10 w-auto mb-4" />
 
@@ -25,16 +24,20 @@ export default function Sidebar() {
             key={cat}
             className="w-full bg-black/20 hover:bg-purple-600 transition-all text-white py-2 px-4 rounded-xl mb-2 flex items-center justify-between text-sm shadow-sm"
           >
-            <span>{cat}</span>
+            <div className="flex items-center space-x-2">
+              <FolderIcon className="h-4 w-4 text-gray-300" />
+              <span>{cat}</span>
+            </div>
             <span className="text-gray-400">•••</span>
           </button>
         ))}
 
         <h2 className="text-sm font-semibold mt-6 mb-2 tracking-wide text-gray-300">Recent Chats</h2>
         <ul className="space-y-2">
-          {['How can I increase the num...', 'What’s the best approach t...'].map((chat, idx) => (
-            <li key={idx} className="bg-black/20 hover:bg-purple-700 p-2 rounded-xl cursor-pointer transition-all text-sm">
-              {chat}
+          {['How can I increase the num...', 'What’s the best approach t...', 'What’s the best approach t...'].map((chat, idx) => (
+            <li key={idx} className="bg-black/20 hover:bg-purple-700 p-2 rounded-xl cursor-pointer transition-all text-sm flex items-center space-x-2">
+              <ChatBubbleLeftRightIcon className="h-4 w-4 text-gray-300" />
+              <span>{chat}</span>
             </li>
           ))}
         </ul>
