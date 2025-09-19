@@ -8,7 +8,12 @@ export default function ChatWindow() {
 
   const sendMessage = () => {
     if (!input.trim()) return;
-    setMessages([...messages, { sender: 'user', text: input }]);
+    const newMessage = {
+      sender: 'user',
+      text: input,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    };
+    setMessages([...messages, newMessage]);
     setInput('');
   };
 
@@ -36,10 +41,21 @@ export default function ChatWindow() {
         <div className="relative z-10 flex flex-col flex-1 px-4 py-6 space-y-4 overflow-y-auto">
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs px-4 py-2 rounded-xl shadow-md text-sm ${
-                msg.sender === 'user' ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-800'
-              }`}>
-                {msg.text}
+              <div className={`flex items-end space-x-2 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
+                {/* Avatar */}
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${
+                  msg.sender === 'user' ? 'bg-gray-400' : 'bg-purple-400'
+                }`}>
+                  {msg.sender === 'user' ? 'U' : 'A'}
+                </div>
+
+                {/* Message bubble */}
+                <div className={`max-w-xs px-4 py-2 rounded-xl shadow-md text-sm ${
+                  msg.sender === 'user' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-800'
+                }`}>
+                  <div>{msg.text}</div>
+                  <div className="text-[10px] text-gray-400 mt-1 text-right">{msg.timestamp}</div>
+                </div>
               </div>
             </div>
           ))}
