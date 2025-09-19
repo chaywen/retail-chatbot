@@ -16,20 +16,17 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col flex-1 p-6 bg-white font-sans">
-      {/* 顶部标签 */}
+    <div className="flex flex-col flex-1 bg-gradient-to-b from-white to-gray-100 p-6 font-sans">
       <div className="self-center mb-4 bg-purple-100 text-purple-800 px-6 py-2 rounded-full font-semibold shadow-md text-sm tracking-wide">
         General
       </div>
 
-      {/* 聊天内容 */}
       <div className="flex-1 overflow-y-auto space-y-4">
         {messages.map((msg, idx) => (
           <MessageBubble key={idx} sender={msg.sender} text={msg.text} />
         ))}
       </div>
 
-      {/* 输入区 */}
       <div className="flex items-center mt-4 bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700">
         <PaperClipIcon className="h-5 w-5 text-gray-300 hover:text-white mr-3 cursor-pointer" />
         <input
