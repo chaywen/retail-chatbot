@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../assets/logo.svg';
 import { PaperClipIcon, MicrophoneIcon } from '@heroicons/react/24/outline';
 
 export default function ChatWindow() {
@@ -12,10 +13,10 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col flex-1 bg-gradient-to-br from-[#f5f3ff] via-[#e9d5ff] to-[#f0f9ff] animate-gradient-x backdrop-blur-md p-6 font-sans">
+    <div className="flex flex-col flex-1 animate-radial backdrop-blur-md p-6 font-sans">
       {messages.length === 0 ? (
         <div className="flex flex-col items-center justify-center flex-1 text-center space-y-4">
-          <div className="text-4xl text-purple-700">✳️</div>
+          <img src={logo} alt="LameBot Logo" className="h-10 w-auto" />
           <h1 className="text-xl font-semibold text-purple-800">How can we assist you today?</h1>
           <p className="text-sm text-gray-600 max-w-md">
             Get expert guidance powered by LameBot AI agents specializing in retail, sales, and negotiation.
