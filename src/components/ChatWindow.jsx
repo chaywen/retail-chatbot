@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import MessageBubble from './MessageBubble';
 
 export default function ChatWindow() {
+  const [messages, setMessages] = useState([
+    { sender: 'bot', text: 'The iPhone 14 Pro starts at RM 5,299 for 128GB.' },
+    { sender: 'user', text: 'What is the price of iPhone 14 Pro?' },
+  ]);
   const [input, setInput] = useState('');
 
   const sendMessage = () => {
@@ -24,20 +28,22 @@ export default function ChatWindow() {
         ))}
       </div>
 
-      {/* 输入框 */}
-      <div className="flex mt-4">
+      {/* 输入区 */}
+      <div className="flex items-center mt-4 bg-black/30 rounded-full px-4 py-2 backdrop-blur-md">
+        <button className="text-gray-300 hover:text-white mr-3">📎</button>
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 border rounded-l px-3 py-2"
-          placeholder="Type your question here"
+          className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none"
+          placeholder="type your Question Here"
         />
+        <button className="text-gray-300 hover:text-white mx-3">🎤</button>
         <button
           onClick={sendMessage}
-          className="bg-purple-600 text-white px-4 py-2 rounded-r hover:bg-purple-700"
+          className="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full"
         >
-          Send
+          ➡️
         </button>
       </div>
     </div>
