@@ -18,7 +18,7 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="relative flex flex-col h-screen bg-white overflow-hidden font-sans">
+    <div className="relative flex flex-col flex-1 min-w-0 h-screen bg-white overflow-hidden font-sans">
       {/* Radial layers */}
       <div className="radial-layer w-96 h-96 top-10 left-20 animate-[pulse-radial_8s_ease-in-out_infinite]"></div>
       <div className="radial-layer w-72 h-72 top-40 right-10 animate-[pulse-radial_10s_ease-in-out_infinite]"></div>
