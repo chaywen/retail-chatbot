@@ -1,11 +1,8 @@
- import React, { useState } from 'react';
-import MessageBubble from './MessageBubble';
+import React, { useState } from 'react';
 import { PaperClipIcon, MicrophoneIcon } from '@heroicons/react/24/outline';
 
 export default function ChatWindow() {
-  const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hi there! 👋 How can I assist you today?' },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 
   const sendMessage = () => {
@@ -15,16 +12,27 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col flex-1 bg-gradient-to-r from-purple-100 via-pink-200 to-blue-100 animate-gradient-x p-6 font-sans backdrop-blur-md">
-      <div className="self-center mb-4 bg-purple-100 text-purple-800 px-6 py-2 rounded-full font-semibold shadow-md text-sm tracking-wide">
-        General
-      </div>
-
-      <div className="flex-1 overflow-y-auto space-y-4">
-        {messages.map((msg, idx) => (
-          <MessageBubble key={idx} sender={msg.sender} text={msg.text} />
-        ))}
-      </div>
+    <div className="flex flex-col flex-1 bg-gradient-to-br from-[#f5f3ff] via-[#e9d5ff] to-[#f0f9ff] animate-gradient-x backdrop-blur-md p-6 font-sans">
+      {messages.length === 0 ? (
+        <div className="flex flex-col items-center justify-center flex-1 text-center space-y-4">
+          <div className="text-4xl text-purple-700">✳️</div>
+          <h1 className="text-xl font-semibold text-purple-800">How can we assist you today?</h1>
+          <p className="text-sm text-gray-600 max-w-md">
+            Get expert guidance powered by LameBot AI agents specializing in retail, sales, and negotiation.
+            Choose the agent that suits your needs and start your conversation with ease.
+          </p>
+        </div>
+      ) : (
+        <div className="flex-1 overflow-y-auto space-y-4">
+          {messages.map((msg, idx) => (
+            <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`p-3 rounded-xl max-w-md shadow-md ${msg.sender === 'user' ? 'bg-purple-200' : 'bg-gray-200'}`}>
+                {msg.text}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex items-center mt-4 bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700">
         <PaperClipIcon className="h-5 w-5 text-gray-300 hover:text-white mr-3 cursor-pointer" />
