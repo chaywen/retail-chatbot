@@ -1,12 +1,12 @@
 import React from 'react';
+import Sidebar from './components/Sidebar';
+import ChatWindow from './components/ChatWindow';
 
-function App() {
+export default function App() {
   return (
-    <div className="bg-red-500 text-white p-4 rounded shadow-lg">
-  Tailwind testing
-
+    <div className="flex h-screen bg-gray-50">
+      <Sidebar />
+      <ChatWindow />
     </div>
   );
 }
-
-export default App;
