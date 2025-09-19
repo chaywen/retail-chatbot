@@ -3,9 +3,8 @@ import MessageBubble from './MessageBubble';
 
 export default function ChatWindow() {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'How can we assist you today?' },
-    { sender: 'user', text: 'What is the price of iPhone 17 Pro?' },
-    { sender: 'bot', text: 'The iPhone 17 Pro starts at RM 5,499 for 256GB.' },
+    { sender: 'bot', text: 'The iPhone 14 Pro starts at RM 5,299 for 128GB.' },
+    { sender: 'user', text: 'What is the price of iPhone 14 Pro?' },
   ]);
   const [input, setInput] = useState('');
 
@@ -16,13 +15,21 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col flex-1 p-4">
-      <div className="flex-1 overflow-y-auto space-y-2 mb-4">
+    <div className="flex flex-col flex-1 p-6 bg-white">
+      {/* 顶部标签 */}
+      <div className="self-center mb-4 bg-purple-100 text-purple-800 px-6 py-2 rounded-full font-semibold">
+        General
+      </div>
+
+      {/* 聊天内容 */}
+      <div className="flex-1 overflow-y-auto space-y-4">
         {messages.map((msg, idx) => (
           <MessageBubble key={idx} sender={msg.sender} text={msg.text} />
         ))}
       </div>
-      <div className="flex">
+
+      {/* 输入框 */}
+      <div className="flex mt-4">
         <input
           type="text"
           value={input}
@@ -32,7 +39,7 @@ export default function ChatWindow() {
         />
         <button
           onClick={sendMessage}
-          className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
+          className="bg-purple-600 text-white px-4 py-2 rounded-r hover:bg-purple-700"
         >
           Send
         </button>
