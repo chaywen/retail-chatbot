@@ -4,16 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes gradient-x {
+@keyframes radial-gradient {
   0%, 100% {
-    background-position: 0% 50%;
+    background-position: center;
+    background-size: 100% 100%;
   }
   50% {
-    background-position: 100% 50%;
+    background-size: 120% 120%;
   }
 }
 
-.animate-gradient-x {
-  background-size: 200% 200%;
-  animation: gradient-x 8s ease infinite;
+.animate-radial {
+  background: radial-gradient(circle at center, #f5f3ff, #e9d5ff, #f0f9ff);
+  animation: radial-gradient 8s ease-in-out infinite;
 }
