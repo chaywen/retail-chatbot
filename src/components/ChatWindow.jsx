@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import MessageBubble from './MessageBubble';
 import { PaperClipIcon, MicrophoneIcon } from '@heroicons/react/24/outline';
 
 export default function ChatWindow() {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'The iPhone 14 Pro starts at RM 5,299 for 128GB.' },
-    { sender: 'user', text: 'What is the price of iPhone 14 Pro?' },
+    { sender: 'bot', text: 'Hi there! 👋 How can I assist you today?' },
   ]);
   const [input, setInput] = useState('');
 
