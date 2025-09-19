@@ -4,7 +4,7 @@ import ChatWindow from './components/ChatWindow';
 
 function App() {
   return (
-    <div className="flex h-screen">
+    <div className="flex w-screen h-screen">
       <Sidebar />
       <ChatWindow />
     </div>
