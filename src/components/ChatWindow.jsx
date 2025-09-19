@@ -1,36 +1,46 @@
 import React, { useState } from 'react';
-import './ChatWindow.css';
 
-const ChatWindow = () => {
+export default function ChatWindow() {
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'Hello 👋 Welcome to our store. What can we help you with today?' }
+    { sender: 'bot', text: 'Hi! How can I help you today?' },
   ]);
   const [input, setInput] = useState('');
 
-  const handleSend = () => {
+  const sendMessage = () => {
     if (!input.trim()) return;
     setMessages([...messages, { sender: 'user', text: input }]);
     setInput('');
-    // 模拟 bot 回复
-    setTimeout(() => {
-      setMessages(prev => [...prev, { sender: 'bot', text: 'Thanks for your message! We\'ll get back to you shortly.' }]);
-    }, 1000);
   };
 
   return (
-    <div className="chat-window">
-      <div className="chat-header">Retail Chatbot</div>
-      <div className="chat-body">
+    <div className="flex flex-col flex-1 p-4">
+      <div className="flex-1 overflow-y-auto space-y-2 mb-4">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`message ${msg.sender}`}>{msg.text}</div>
+          <div
+            key={idx}
+            className={`p-2 rounded max-w-md ${
+              msg.sender === 'user' ? 'bg-blue-100 self-end' : 'bg-gray-200 self-start'
+            }`}
+          >
+            {msg.text}
+          </div>
         ))}
       </div>
-      <div className="chat-footer">
-        <input value={input} onChange={e => setInput(e.target.value)} placeholder="Type your message..." />
-        <button onClick={handleSend}>Send</button>
+      <div className="flex">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="flex-1 border rounded-l px-3 py-2"
+          placeholder="Type your message..."
+        />
+        <button
+          onClick={sendMessage}
+          className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
-};
-
-export default ChatWindow;
+}
