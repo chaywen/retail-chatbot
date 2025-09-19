@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import logo from '../assets/logo.svg';
 import { PaperClipIcon, MicrophoneIcon } from '@heroicons/react/24/outline';
@@ -13,29 +14,24 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="flex flex-col flex-1 animate-radial backdrop-blur-md p-6 font-sans">
-      {messages.length === 0 ? (
-        <div className="flex flex-col items-center justify-center flex-1 text-center space-y-4">
-          <img src={logo} alt="LameBot Logo" className="h-10 w-auto" />
-          <h1 className="text-xl font-semibold text-purple-800">How can we assist you today?</h1>
-          <p className="text-sm text-gray-600 max-w-md">
-            Get expert guidance powered by LameBot AI agents specializing in retail, sales, and negotiation.
-            Choose the agent that suits your needs and start your conversation with ease.
-          </p>
-        </div>
-      ) : (
-        <div className="flex-1 overflow-y-auto space-y-4">
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`p-3 rounded-xl max-w-md shadow-md ${msg.sender === 'user' ? 'bg-purple-200' : 'bg-gray-200'}`}>
-                {msg.text}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="relative flex flex-col flex-1 bg-white overflow-hidden font-sans">
+      {/* Radial layers */}
+      <div className="radial-layer w-96 h-96 top-10 left-20 animate-[pulse-radial_8s_ease-in-out_infinite]"></div>
+      <div className="radial-layer w-72 h-72 top-40 right-10 animate-[pulse-radial_10s_ease-in-out_infinite]"></div>
+      <div className="radial-layer w-64 h-64 bottom-20 left-1/2 animate-[pulse-radial_12s_ease-in-out_infinite]"></div>
 
-      <div className="flex items-center mt-4 bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700">
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center flex-1 text-center space-y-3 px-4">
+        <img src={logo} alt="LameBot Logo" className="h-8 w-auto" />
+        <h1 className="text-base font-semibold text-purple-800">How can we assist you today?</h1>
+        <p className="text-xs text-gray-600 max-w-sm leading-relaxed">
+          Get expert guidance powered by LameBot AI agents specializing in retail, sales, and negotiation.
+          Choose the agent that suits your needs and start your conversation with ease.
+        </p>
+      </div>
+
+      {/* Input */}
+      <div className="relative z-10 mt-4 flex items-center bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700 mx-4 mb-6">
         <PaperClipIcon className="h-5 w-5 text-gray-300 hover:text-white mr-3 cursor-pointer" />
         <input
           type="text"
