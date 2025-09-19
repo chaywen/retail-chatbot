@@ -2,10 +2,6 @@ import React, { useState } from 'react';
 import MessageBubble from './MessageBubble';
 
 export default function ChatWindow() {
-  const [messages, setMessages] = useState([
-    { sender: 'bot', text: 'The iPhone 14 Pro starts at RM 5,299 for 128GB.' },
-    { sender: 'user', text: 'What is the price of iPhone 14 Pro?' },
-  ]);
   const [input, setInput] = useState('');
 
   const sendMessage = () => {
