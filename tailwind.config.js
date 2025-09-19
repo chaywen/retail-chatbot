@@ -2,7 +2,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     "./public/index.html",
-    "./src/styles/tailwind.css" // ✅ 加上你的 CSS 文件路径
+    "./src/styles/tailwind.css"
   ],
   theme: {
     extend: {
@@ -13,3 +13,4 @@ module.exports = {
   },
   plugins: [],
 }
+
