@@ -1,10 +1,11 @@
+
 import React from 'react';
 import logo from '../assets/logo.svg';
 import { Cog6ToothIcon } from '@heroicons/react/24/outline';
 
 export default function Sidebar() {
   return (
-    <div className="w-1/4 bg-gradient-to-b from-black via-purple-900 to-pink-900 text-white p-4 flex flex-col justify-between h-screen font-sans">
+    <div className="w-1/4 bg-gradient-to-b from-black via-purple-900 to-purple-800 text-white p-4 flex flex-col justify-between h-screen font-sans">
       <div>
         <img src={logo} alt="LameBot Logo" className="h-10 w-auto mb-4" />
 
