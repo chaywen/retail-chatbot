@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { sendMessage } from "../utils/api";
+import { useNavigate } from "react-router-dom"; // 如果你有路由
 
 export default function ChatWidget() {
   const [messages, setMessages] = useState([]);
@@ -7,6 +8,23 @@ export default function ChatWidget() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  const handleNewChat = () => {
+  if (messages.length > 0) {
+    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+    const newEntry = {
+      id: Date.now(),
+      messages: messages.map((msg) => ({
+        sender: msg.user ? "user" : "bot",
+        text: msg.user || msg.bot,
+        timestamp: new Date().toLocaleTimeString(),
+      })),
+    };
+    localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+  }
+
+  setMessages([]);
+  setInput("");
+};
   const handleSend = async () => {
     if (!input.trim()) return;
     setLoading(true);
@@ -33,6 +51,12 @@ export default function ChatWidget() {
         <div ref={messagesEndRef} />
       </div>
 
+      <button
+  onClick={handleNewChat}
+  className="mb-2 text-xs text-purple-600 underline"
+>
+  Begin a new chat
+</button>
       <div className="mt-4 flex">
         <input
           value={input}
