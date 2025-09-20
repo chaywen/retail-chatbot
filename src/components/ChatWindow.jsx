@@ -20,19 +20,28 @@ export default function ChatWindow() {
   };
 
   const handleNewChat = () => {
-    if (messages.length > 0) {
-      const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
-      const newEntry = {
-        id: Date.now(),
-        messages: messages.map((msg) => ({
-          sender: msg.sender,
-          text: msg.text,
-          timestamp: msg.timestamp,
-        })),
-      };
-      localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
-      window.dispatchEvent(new Event("recentChatsUpdated"));
-    }
+  if (messages.length > 0) {
+    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+    const newEntry = {
+      id: Date.now(),
+      messages: messages.map((msg) => {
+        const text = msg.user || msg.bot;
+        const sender = msg.user ? "user" : "bot";
+        return {
+          sender,
+          text,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+      }),
+    };
+    localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+    window.dispatchEvent(new Event("recentChatsUpdated"));
+  }
+
+  setMessages([]);
+  setInput("");
+  console.log("🔄 New chat triggered from Sidebar");
+};
 
     setMessages([]);
     setInput('');
