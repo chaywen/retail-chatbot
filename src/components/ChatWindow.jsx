@@ -55,16 +55,16 @@ export default function ChatWindow() {
   }, []);
 
   useEffect(() => {
-    const loadChat = (e) => {
-      const chat = e.detail;
-      if (Array.isArray(chat.messages)) {
-        setMessages(chat.messages);
-      }
-    };
+  const loadChat = (e) => {
+    const chat = e.detail;
+    if (Array.isArray(chat.messages)) {
+      setMessages(chat.messages);
+    }
+  };
 
-    window.addEventListener("loadChat", loadChat);
-    return () => window.removeEventListener("loadChat", loadChat);
-  }, []);
+  window.addEventListener("loadChat", loadChat);
+  return () => window.removeEventListener("loadChat", loadChat);
+}, []);
 
   useEffect(() => {
     if (scrollRef.current) {
