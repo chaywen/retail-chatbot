@@ -19,6 +19,28 @@ export default function ChatWindow() {
     setInput('');
   };
 
+  const handleNewChat = () => {
+    if (messages.length > 0) {
+      const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+      const newEntry = {
+        id: Date.now(),
+        messages: [...messages],
+      };
+      localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+      window.dispatchEvent(new Event("recentChatsUpdated"));
+    }
+
+    setMessages([]);
+    setInput('');
+    console.log("🔄 New chat triggered from Sidebar");
+  };
+
+  useEffect(() => {
+    const clearChat = () => handleNewChat();
+    window.addEventListener("triggerNewChat", clearChat);
+    return () => window.removeEventListener("triggerNewChat", clearChat);
+  }, []);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
