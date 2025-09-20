@@ -4,8 +4,15 @@ export default function RecentChats() {
   const [recentChats, setRecentChats] = useState([]);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
-    setRecentChats(stored);
+    const loadChats = () => {
+      const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
+      setRecentChats(stored);
+    };
+
+    loadChats(); // 初始加载
+
+    window.addEventListener("recentChatsUpdated", loadChats); // 监听事件
+    return () => window.removeEventListener("recentChatsUpdated", loadChats); // 清理监听
   }, []);
 
   return (
