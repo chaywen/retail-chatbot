@@ -33,14 +33,15 @@ export default function ChatWidget() {
 
     setMessages([]);
     setInput("");
+    console.log("🔄 New chat triggered from Sidebar");
   };
 
-  // ✅ 监听 Sidebar 发出的 triggerNewChat 事件
+  // ✅ 正确监听 Sidebar 发出的 triggerNewChat 事件（只注册一次）
   useEffect(() => {
     const clearChat = () => handleNewChat();
     window.addEventListener("triggerNewChat", clearChat);
     return () => window.removeEventListener("triggerNewChat", clearChat);
-  }, [messages]);
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
