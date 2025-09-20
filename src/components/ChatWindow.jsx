@@ -24,7 +24,11 @@ export default function ChatWindow() {
       const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
       const newEntry = {
         id: Date.now(),
-        messages: [...messages],
+        messages: messages.map((msg) => ({
+          sender: msg.sender,
+          text: msg.text,
+          timestamp: msg.timestamp,
+        })),
       };
       localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
       window.dispatchEvent(new Event("recentChatsUpdated"));
@@ -39,6 +43,18 @@ export default function ChatWindow() {
     const clearChat = () => handleNewChat();
     window.addEventListener("triggerNewChat", clearChat);
     return () => window.removeEventListener("triggerNewChat", clearChat);
+  }, []);
+
+  useEffect(() => {
+    const loadChat = (e) => {
+      const chat = e.detail;
+      if (Array.isArray(chat.messages)) {
+        setMessages(chat.messages);
+      }
+    };
+
+    window.addEventListener("loadChat", loadChat);
+    return () => window.removeEventListener("loadChat", loadChat);
   }, []);
 
   useEffect(() => {
