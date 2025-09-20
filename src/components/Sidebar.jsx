@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.svg';
 import { ChatBubbleLeftRightIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import './sidebar.css';
 
 export default function Sidebar() {
+  const [recentChats, setRecentChats] = useState([]);
+
+  useEffect(() => {
+    const loadChats = () => {
+      const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
+      setRecentChats(stored);
+    };
+
+    loadChats(); // 初始加载
+
+    window.addEventListener("recentChatsUpdated", loadChats); // 监听事件
+    return () => window.removeEventListener("recentChatsUpdated", loadChats); // 清理监听
+  }, []);
+
+  const handleNewChat = () => {
+    window.dispatchEvent(new Event("triggerNewChat")); // 通知 ChatWidget 清空
+  };
+
   return (
     <div className="sidebar-container">
       <div className="logo-section">
         <img src={logo} alt="Logo" className="logo-image" />
       </div>
 
-      <button className="sidebar-button primary">
+      <button className="sidebar-button primary" onClick={handleNewChat}>
         <PlusIcon className="h-5 w-5 mr-2" />
         Begin a New Chat
       </button>
@@ -35,8 +53,11 @@ export default function Sidebar() {
       <div className="recent-section">
         <p className="category-title">Recent Chats</p>
         <ul className="recent-list">
-          <li className="recent-item">How can I increase the num...</li>
-          <li className="recent-item">What's the best approach t...</li>
+          {recentChats.map((chat) => (
+            <li key={chat.id} className="recent-item">
+              {chat.messages[0]?.text?.slice(0, 40) || "New chat"}
+            </li>
+          ))}
         </ul>
       </div>
     </div>
