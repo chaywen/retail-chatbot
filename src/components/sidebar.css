@@ -1,0 +1,91 @@
+.sidebar-container {
+  width: 280px;
+  background: linear-gradient(to bottom right, #000000, #ff00cc, #8000ff);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  font-family: 'Inter', sans-serif;
+  overflow-y: auto;
+}
+
+.logo-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.logo-image {
+  height: 40px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3));
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.sidebar-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  padding: 0.4rem 0.6rem;
+  margin: 1rem 0;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+  outline: none;
+  width: 100%;
+}
+
+.category-section,
+.recent-section {
+  margin-top: 1rem;
+}
+
+.category-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #e0e0e0;
+}
+
+.category-list,
+.recent-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-item,
+.recent-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.category-item:hover,
+.recent-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
