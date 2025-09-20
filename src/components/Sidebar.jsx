@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.svg';
 import { ChatBubbleLeftRightIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
 import './sidebar.css';
 
