@@ -28,6 +28,7 @@ export default function ChatWidget() {
         })),
       };
       localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+      window.dispatchEvent(new Event("recentChatsUpdated"));
     }
 
     setMessages([]);
