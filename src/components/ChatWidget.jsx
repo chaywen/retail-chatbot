@@ -35,6 +35,13 @@ export default function ChatWidget() {
     setInput("");
   };
 
+  // ✅ 监听 Sidebar 发出的 triggerNewChat 事件
+  useEffect(() => {
+    const clearChat = () => handleNewChat();
+    window.addEventListener("triggerNewChat", clearChat);
+    return () => window.removeEventListener("triggerNewChat", clearChat);
+  }, [messages]);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
