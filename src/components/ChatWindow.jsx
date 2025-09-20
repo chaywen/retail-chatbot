@@ -19,7 +19,6 @@ export default function ChatWindow() {
 
   return (
     <div className="relative flex flex-col flex-1 min-w-0 h-screen bg-white overflow-hidden font-sans">
-
       {/* Radial layers */}
       <div className="radial-layer w-96 h-96 top-10 left-20 animate-[pulse-radial_8s_ease-in-out_infinite]"></div>
       <div className="radial-layer w-72 h-72 top-40 right-10 animate-[pulse-radial_10s_ease-in-out_infinite]"></div>
@@ -43,14 +42,11 @@ export default function ChatWindow() {
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`flex items-end space-x-2 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                {/* Avatar */}
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${
                   msg.sender === 'user' ? 'bg-gray-400' : 'bg-purple-400'
                 }`}>
                   {msg.sender === 'user' ? 'U' : 'A'}
                 </div>
-
-                {/* Message bubble */}
                 <div className={`max-w-xs px-4 py-2 rounded-xl shadow-md text-sm ${
                   msg.sender === 'user' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-800'
                 }`}>
@@ -63,26 +59,13 @@ export default function ChatWindow() {
         </div>
       )}
 
-      {/* Input */}
-      <div className="relative z-10 mt-auto flex items-center bg-black/30 rounded-full px-4 py-2 backdrop-blur-md shadow-inner border border-gray-700 mx-4 mb-6">
-        <PaperClipIcon className="h-5 w-5 text-gray-300 hover:text-white mr-3 cursor-pointer" />
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none text-sm"
-          placeholder="Type your question here"
-        />
-        <MicrophoneIcon className="h-5 w-5 text-gray-300 hover:text-white mx-3 cursor-pointer" />
-        <button
-          onClick={sendMessage}
-          className="bg-purple-600 hover:bg-purple-700 text-white p-2 rounded-full transition-all shadow-lg"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
+      {/* ✅ Optimized InputBox */}
+      <InputBox
+        value={input}
+        onChange={setInput}
+        onSend={sendMessage}
+      />
     </div>
   );
 }
+ 
