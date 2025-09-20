@@ -1,4 +1,3 @@
-// src/utils/api.js
 const API_URL = "https://nfhuqnv2h6.execute-api.us-east-1.amazonaws.com";
 
 export async function sendMessage(message) {
@@ -15,6 +14,6 @@ export async function sendMessage(message) {
     return data;
   } catch (error) {
     console.error("API call failed:", error);
-    return { error: "Failed to connect to API" };
+    return { text: "Error: Unable to connect to backend." };
   }
 }
