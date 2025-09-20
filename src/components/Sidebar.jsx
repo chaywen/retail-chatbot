@@ -19,7 +19,7 @@ export default function Sidebar() {
   }, []);
 
   const handleNewChat = () => {
-    window.dispatchEvent(new Event("triggerNewChat")); // 通知 ChatWidget 清空
+    window.dispatchEvent(new Event("triggerNewChat")); // 通知 ChatWindow 清空
   };
 
   return (
@@ -54,7 +54,13 @@ export default function Sidebar() {
         <p className="category-title">Recent Chats</p>
         <ul className="recent-list">
           {recentChats.map((chat) => (
-            <li key={chat.id} className="recent-item">
+            <li
+              key={chat.id}
+              className="recent-item cursor-pointer"
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent("loadChat", { detail: chat }));
+              }}
+            >
               {chat.messages[0]?.text?.slice(0, 40) || "New chat"}
             </li>
           ))}
