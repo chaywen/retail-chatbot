@@ -25,6 +25,19 @@ export default function ChatWindow() {
     setInput('');
   };
 
+  const sendImage = (imageDataUrl) => {
+    const imageMessage = {
+      sender: 'user',
+      image: imageDataUrl,
+      timestamp: new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    };
+
+    setMessages((prev) => [...prev, imageMessage]);
+  };
+
   const handleNewChat = () => {
     if (messages.length === 0) {
       console.log("⚠️ No messages to save.");
@@ -34,7 +47,7 @@ export default function ChatWindow() {
     }
 
     console.log("🟣 Begin a New Chat triggered");
-    setShouldSave(true); // 标记要保存
+    setShouldSave(true);
   };
 
   useEffect(() => {
@@ -44,7 +57,8 @@ export default function ChatWindow() {
         id: Date.now(),
         messages: messages.map((msg) => ({
           sender: msg.sender,
-          text: msg.text,
+          text: msg.text || null,
+          image: msg.image || null,
           timestamp: msg.timestamp,
         })),
       };
@@ -90,12 +104,10 @@ export default function ChatWindow() {
 
   return (
     <div className="relative flex flex-col flex-1 min-w-0 h-screen bg-gradient-to-br from-white via-purple-100 to-white overflow-hidden font-sans">
-      {/* Radial layers */}
       <div className="radial-layer w-96 h-96 top-10 left-20 animate-[pulse-radial_8s_ease-in-out_infinite]"></div>
       <div className="radial-layer w-72 h-72 top-40 right-10 animate-[pulse-radial_10s_ease-in-out_infinite]"></div>
       <div className="radial-layer w-64 h-64 bottom-20 left-1/2 -translate-x-1/2 animate-[pulse-radial_12s_ease-in-out_infinite]"></div>
 
-      {/* Welcome message */}
       {messages.length === 0 && (
         <div className="relative z-10 flex flex-col items-center justify-center flex-1 text-center space-y-3 px-4">
           <img src={logo} alt="LameBot Logo" className="h-8 w-auto" />
@@ -107,7 +119,6 @@ export default function ChatWindow() {
         </div>
       )}
 
-      {/* Messages */}
       {messages.length > 0 && (
         <div
           ref={scrollRef}
@@ -119,9 +130,13 @@ export default function ChatWindow() {
         </div>
       )}
 
-      {/* Input */}
       <div className="relative z-10 mb-6 px-4">
-        <InputBox value={input} onChange={setInput} onSend={sendMessage} />
+        <InputBox
+          value={input}
+          onChange={setInput}
+          onSend={sendMessage}
+          onSendImage={sendImage}
+        />
       </div>
     </div>
   );
