@@ -22,7 +22,34 @@ export default function ChatWindow() {
         minute: '2-digit',
       }),
     };
+    import { API_URL } from "../App";   // add this at the top
 
+// Example send message function
+const handleSendMessage = async () => {
+  if (!userMessage.trim()) return;
+
+  // Add user message to chat state first
+  setMessages([...messages, { sender: "user", text: userMessage }]);
+
+  try {
+    const res = await fetch(${API_URL}/faq, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: userMessage, userId: "frontend" }),
+    });
+
+    const data = await res.json();
+
+    // Add bot reply to chat
+    setMessages(prev => [...prev, { sender: "bot", text: data.answer }]);
+
+  } catch (err) {
+    console.error("API call failed:", err);
+    setMessages(prev => [...prev, { sender: "bot", text: "⚠ Failed to connect to server" }]);
+  }
+
+  setUserMessage(""); // clear input
+};
     setMessages((prev) => {
       const updated = [...prev, userMessage];
       latestMessagesRef.current = updated;
