@@ -13,26 +13,39 @@ export default function ChatWindow() {
     const newMessage = {
       sender: 'user',
       text: input,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      timestamp: new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
     };
     setMessages((prev) => [...prev, newMessage]);
     setInput('');
   };
 
   const handleNewChat = () => {
-    if (messages.length > 0) {
-      const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
-      const newEntry = {
-        id: Date.now(),
-        messages: messages.map((msg) => ({
-          sender: msg.sender,
-          text: msg.text,
-          timestamp: msg.timestamp,
-        })),
-      };
+    if (messages.length === 0) {
+      console.log("⚠️ No messages to save.");
+      setMessages([]);
+      setInput('');
+      return;
+    }
+
+    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+    const newEntry = {
+      id: Date.now(),
+      messages: messages.map((msg) => ({
+        sender: msg.sender,
+        text: msg.text,
+        timestamp: msg.timestamp,
+      })),
+    };
+
+    try {
       localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
-      console.log("🧠 Saved to localStorage:", [...recent, newEntry]);
+      console.log("✅ Saved to localStorage:", [...recent, newEntry]);
       window.dispatchEvent(new Event("recentChatsUpdated"));
+    } catch (e) {
+      console.error("❌ Failed to save to localStorage:", e);
     }
 
     setMessages([]);
@@ -85,7 +98,10 @@ export default function ChatWindow() {
 
       {/* Messages */}
       {messages.length > 0 && (
-        <div ref={scrollRef} className="relative z-10 flex flex-col flex-1 px-4 py-6 space-y-4 overflow-y-auto">
+        <div
+          ref={scrollRef}
+          className="relative z-10 flex flex-col flex-1 px-4 py-6 space-y-4 overflow-y-auto"
+        >
           {messages.map((msg, idx) => (
             <MessageBubble key={idx} msg={msg} />
           ))}
@@ -94,11 +110,43 @@ export default function ChatWindow() {
 
       {/* Input */}
       <div className="relative z-10 mb-6 px-4">
-        <InputBox
-          value={input}
-          onChange={setInput}
-          onSend={sendMessage}
-        />
+        <InputBox value={input} onChange={setInput} onSend={sendMessage} />
+      </div>
+
+      {/* Force Save Button for Debugging */}
+      <div className="mt-4 px-4">
+        <button
+          onClick={() => {
+            const test = {
+              id: Date.now(),
+              messages: [
+                {
+                  sender: "user",
+                  text: "这是测试消息",
+                  timestamp: new Date().toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }),
+                },
+                {
+                  sender: "bot",
+                  text: "这是自动回复",
+                  timestamp: new Date().toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  }),
+                },
+              ],
+            };
+
+            localStorage.setItem("recentChats", JSON.stringify([test]));
+            window.dispatchEvent(new Event("recentChatsUpdated"));
+            console.log("✅ 强制写入成功:", test);
+          }}
+          className="bg-purple-600 text-white text-xs px-3 py-1 rounded hover:bg-purple-700 transition"
+        >
+          Force Save Test Chat
+        </button>
       </div>
     </div>
   );
