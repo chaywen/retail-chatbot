@@ -11,7 +11,8 @@ export default function ChatWindow() {
 
   const sendMessage = () => {
     if (!input.trim()) return;
-    const newMessage = {
+
+    const userMessage = {
       sender: 'user',
       text: input,
       timestamp: new Date().toLocaleTimeString([], {
@@ -19,7 +20,17 @@ export default function ChatWindow() {
         minute: '2-digit',
       }),
     };
-    setMessages((prev) => [...prev, newMessage]);
+
+    const botReply = {
+      sender: 'bot',
+      text: `你说的是：${input}`, // 模拟回复，可替换为真实 API
+      timestamp: new Date().toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+    };
+
+    setMessages((prev) => [...prev, userMessage, botReply]);
     setInput('');
   };
 
