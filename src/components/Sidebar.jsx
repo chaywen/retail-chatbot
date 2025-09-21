@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../assets/logo.svg';
-import { ChatBubbleLeftRightIcon, MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+  ChatBubbleLeftRightIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+} from '@heroicons/react/24/outline';
 import './sidebar.css';
 
 export default function Sidebar() {
@@ -9,11 +13,11 @@ export default function Sidebar() {
   useEffect(() => {
     const loadChats = () => {
       const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
-      setRecentChats(stored);
+      console.log("📥 Sidebar loaded chats:", stored); // ✅ 调试输出
+      setRecentChats([...stored]); // ✅ 强制触发状态更新
     };
 
     loadChats(); // 初始加载
-
     window.addEventListener("recentChatsUpdated", loadChats); // 监听事件
     return () => window.removeEventListener("recentChatsUpdated", loadChats); // 清理监听
   }, []);
@@ -24,20 +28,24 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar-container">
+      {/* Logo */}
       <div className="logo-section">
         <img src={logo} alt="Logo" className="logo-image" />
       </div>
 
+      {/* New Chat Button */}
       <button className="sidebar-button primary" onClick={handleNewChat}>
         <PlusIcon className="h-5 w-5 mr-2" />
         Begin a New Chat
       </button>
 
+      {/* Search Box */}
       <div className="search-box">
         <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
         <input type="text" placeholder="Search..." className="search-input" />
       </div>
 
+      {/* Categories */}
       <div className="category-section">
         <p className="category-title">Categories</p>
         <ul className="category-list">
@@ -50,20 +58,30 @@ export default function Sidebar() {
         </ul>
       </div>
 
+      {/* Recent Chats */}
       <div className="recent-section">
         <p className="category-title">Recent Chats</p>
         <ul className="recent-list">
-          {recentChats.map((chat) => (
-            <li
-              key={chat.id}
-              className="recent-item cursor-pointer"
-              onClick={() => {
-                window.dispatchEvent(new CustomEvent("loadChat", { detail: chat }));
-              }}
-            >
-              {chat.messages[0]?.text?.slice(0, 40) || "New chat"}
-            </li>
-          ))}
+          {recentChats.length === 0 && (
+            <li className="recent-item text-gray-400 italic">No chats yet</li>
+          )}
+
+          {recentChats.map((chat) => {
+            const preview = chat?.messages?.[0]?.text || "New chat";
+            const timestamp = chat?.messages?.at(-1)?.timestamp || "";
+            return (
+              <li
+                key={chat.id}
+                className="recent-item cursor-pointer flex justify-between items-center"
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("loadChat", { detail: chat }));
+                }}
+              >
+                <span>{preview.slice(0, 40)}</span>
+                <span className="text-xs text-gray-400 ml-2">{timestamp}</span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
