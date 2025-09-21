@@ -28,27 +28,31 @@ export default function Sidebar() {
     return () => window.removeEventListener("recentChatsUpdated", loadChats);
   }, []);
 
+  // ✅ 触发 ChatWindow 的保存逻辑
   const handleNewChat = () => {
-    // ✅ 改为触发保存逻辑
     window.dispatchEvent(new Event("triggerNewChat"));
   };
 
   return (
     <div className="sidebar-container">
+      {/* Logo */}
       <div className="logo-section">
         <img src={logo} alt="Logo" className="logo-image" />
       </div>
 
+      {/* Begin New Chat */}
       <button className="sidebar-button primary" onClick={handleNewChat}>
         <PlusIcon className="h-5 w-5 mr-2" />
         Begin a New Chat
       </button>
 
+      {/* Search */}
       <div className="search-box">
         <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
         <input type="text" placeholder="Search..." className="search-input" />
       </div>
 
+      {/* Categories */}
       <div className="category-section">
         <p className="category-title">Categories</p>
         <ul className="category-list">
@@ -61,6 +65,7 @@ export default function Sidebar() {
         </ul>
       </div>
 
+      {/* Recent Chats */}
       <div className="recent-section">
         <p className="category-title">Recent Chats</p>
         <ul className="recent-list">
