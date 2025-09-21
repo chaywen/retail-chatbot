@@ -9,12 +9,12 @@ import './sidebar.css';
 
 export default function Sidebar() {
   const [recentChats, setRecentChats] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(''); // ✅ 新增搜索状态
 
   useEffect(() => {
     const loadChats = () => {
       const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
 
-      // ✅ 按时间戳倒序排列（最新在最上）
       const sorted = Array.isArray(stored)
         ? [...stored].sort((a, b) => b.id - a.id)
         : [];
@@ -23,15 +23,20 @@ export default function Sidebar() {
       setRecentChats(sorted);
     };
 
-    loadChats(); // 初始加载
-    window.addEventListener("recentChatsUpdated", loadChats); // 监听刷新事件
+    loadChats();
+    window.addEventListener("recentChatsUpdated", loadChats);
     return () => window.removeEventListener("recentChatsUpdated", loadChats);
   }, []);
 
-  // ✅ 触发 ChatWindow 的保存逻辑
   const handleNewChat = () => {
     window.dispatchEvent(new Event("triggerNewChat"));
   };
+
+  // ✅ 过滤 recentChats 根据搜索关键词
+  const filteredChats = recentChats.filter((chat) => {
+    const preview = chat?.messages?.[0]?.text || '';
+    return preview.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div className="sidebar-container">
@@ -49,7 +54,13 @@ export default function Sidebar() {
       {/* Search */}
       <div className="search-box">
         <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
-        <input type="text" placeholder="Search..." className="search-input" />
+        <input
+          type="text"
+          placeholder="Search..."
+          className="search-input"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
       {/* Categories */}
@@ -69,11 +80,11 @@ export default function Sidebar() {
       <div className="recent-section">
         <p className="category-title">Recent Chats</p>
         <ul className="recent-list">
-          {recentChats.length === 0 && (
-            <li className="recent-item text-gray-400 italic">No chats yet</li>
+          {filteredChats.length === 0 && (
+            <li className="recent-item text-gray-400 italic">No matching chats</li>
           )}
 
-          {recentChats.map((chat) => {
+          {filteredChats.map((chat) => {
             const preview = chat?.messages?.[0]?.text || "New chat";
             const timestamp = chat?.messages?.at(-1)?.timestamp || "";
             return (
