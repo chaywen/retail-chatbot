@@ -7,6 +7,7 @@ export default function ChatWindow() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const scrollRef = useRef(null);
+  const latestMessagesRef = useRef([]); // ✅ 实时追踪消息副本
 
   const sendMessage = () => {
     if (!input.trim()) return;
@@ -20,7 +21,12 @@ export default function ChatWindow() {
       }),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => {
+      const updated = [...prev, userMessage];
+      latestMessagesRef.current = updated;
+      return updated;
+    });
+
     setInput('');
   };
 
@@ -34,11 +40,17 @@ export default function ChatWindow() {
       }),
     };
 
-    setMessages((prev) => [...prev, imageMessage]);
+    setMessages((prev) => {
+      const updated = [...prev, imageMessage];
+      latestMessagesRef.current = updated;
+      return updated;
+    });
   };
 
   const handleNewChat = () => {
-    if (messages.length === 0) {
+    const currentMessages = latestMessagesRef.current;
+
+    if (currentMessages.length === 0) {
       console.log("⚠️ No messages to save.");
       setMessages([]);
       setInput('');
@@ -50,7 +62,7 @@ export default function ChatWindow() {
     const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
     const newEntry = {
       id: Date.now(),
-      messages: messages.map((msg) => ({
+      messages: currentMessages.map((msg) => ({
         sender: msg.sender,
         text: msg.text || null,
         image: msg.image || null,
@@ -68,6 +80,7 @@ export default function ChatWindow() {
 
     setMessages([]);
     setInput('');
+    latestMessagesRef.current = [];
     console.log("🔄 New chat triggered from Sidebar");
   };
 
@@ -82,6 +95,7 @@ export default function ChatWindow() {
       const chat = e.detail;
       if (Array.isArray(chat.messages)) {
         setMessages(chat.messages);
+        latestMessagesRef.current = chat.messages; // ✅ 同步副本
       }
     };
 
