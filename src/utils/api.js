@@ -1,13 +1,26 @@
-// src/utils/api.js
 export const sendMessage = async (message) => {
-  const res = await fetch(process.env.REACT_APP_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ message }),
-  });
+  console.log("📡 Sending to API:", process.env.REACT_APP_API_URL);
+  console.log("📝 Payload:", { message });
 
-  if (!res.ok) throw new Error('API error');
-  return res.json();
+  try {
+    const res = await fetch(process.env.REACT_APP_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`API error: ${res.status} ${errorText}`);
+    }
+
+    const data = await res.json();
+    console.log("📥 Received from API:", data);
+    return data;
+  } catch (err) {
+    console.error("❌ API call failed:", err.message);
+    throw err;
+  }
 };
