@@ -11,16 +11,22 @@ export default function Sidebar() {
   const [recentChats, setRecentChats] = useState([]);
 
   useEffect(() => {
-    const loadChats = () => {
-      const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
-      console.log("📥 Sidebar loaded chats:", stored);
-      setRecentChats(Array.isArray(stored) ? [...stored] : []);
-    };
+  const loadChats = () => {
+    const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
 
-    loadChats(); // 初始加载
-    window.addEventListener("recentChatsUpdated", loadChats); // 监听刷新事件
-    return () => window.removeEventListener("recentChatsUpdated", loadChats);
-  }, []);
+    // ✅ 按时间戳倒序排列（最新在最上）
+    const sorted = Array.isArray(stored)
+      ? [...stored].sort((a, b) => b.id - a.id)
+      : [];
+
+    console.log("📥 Sidebar loaded chats:", sorted);
+    setRecentChats(sorted);
+  };
+
+  loadChats(); // 初始加载
+  window.addEventListener("recentChatsUpdated", loadChats); // 监听刷新事件
+  return () => window.removeEventListener("recentChatsUpdated", loadChats);
+}, []);
 
   const handleNewChat = () => {
     // ✅ 只清空 ChatWindow，不再保存
