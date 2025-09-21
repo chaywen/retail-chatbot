@@ -21,16 +21,7 @@ export default function ChatWindow() {
       }),
     };
 
-    const botReply = {
-      sender: 'bot',
-      text: `你说的是：${input}`, // 模拟回复，可替换为真实 API
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      }),
-    };
-
-    setMessages((prev) => [...prev, userMessage, botReply]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
   };
 
@@ -131,8 +122,6 @@ export default function ChatWindow() {
       <div className="relative z-10 mb-6 px-4">
         <InputBox value={input} onChange={setInput} onSend={sendMessage} />
       </div>
-
-      
     </div>
   );
 }
