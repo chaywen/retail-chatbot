@@ -1,5 +1,5 @@
-export const sendMessage = async (message) => {
-  console.log("📡 Sending to API:", process.env.REACT_APP_API_URL);
+export const sendMessageToBackend = async (message) => {
+  console.log("📡 API URL:", process.env.REACT_APP_API_URL);
   console.log("📝 Payload:", { message });
 
   try {
