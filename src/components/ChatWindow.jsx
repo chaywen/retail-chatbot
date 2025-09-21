@@ -6,6 +6,7 @@ import { MessageBubble } from './MessageBubble';
 export default function ChatWindow() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
+  const [shouldSave, setShouldSave] = useState(false);
   const scrollRef = useRef(null);
 
   const sendMessage = () => {
@@ -30,28 +31,35 @@ export default function ChatWindow() {
       return;
     }
 
-    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
-    const newEntry = {
-      id: Date.now(),
-      messages: messages.map((msg) => ({
-        sender: msg.sender,
-        text: msg.text,
-        timestamp: msg.timestamp,
-      })),
-    };
-
-    try {
-      localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
-      console.log("✅ Saved to localStorage:", [...recent, newEntry]);
-      window.dispatchEvent(new Event("recentChatsUpdated"));
-    } catch (e) {
-      console.error("❌ Failed to save to localStorage:", e);
-    }
-
-    setMessages([]);
-    setInput('');
-    console.log("🔄 New chat triggered from Sidebar");
+    setShouldSave(true); // 标记要保存
   };
+
+  useEffect(() => {
+    if (shouldSave && messages.length > 0) {
+      const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+      const newEntry = {
+        id: Date.now(),
+        messages: messages.map((msg) => ({
+          sender: msg.sender,
+          text: msg.text,
+          timestamp: msg.timestamp,
+        })),
+      };
+
+      try {
+        localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+        console.log("✅ Saved to localStorage:", [...recent, newEntry]);
+        window.dispatchEvent(new Event("recentChatsUpdated"));
+      } catch (e) {
+        console.error("❌ Failed to save to localStorage:", e);
+      }
+
+      setMessages([]);
+      setInput('');
+      setShouldSave(false);
+      console.log("🔄 New chat triggered from Sidebar");
+    }
+  }, [shouldSave, messages]);
 
   useEffect(() => {
     const clearChat = () => handleNewChat();
@@ -139,7 +147,8 @@ export default function ChatWindow() {
               ],
             };
 
-            localStorage.setItem("recentChats", JSON.stringify([test]));
+            const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+            localStorage.setItem("recentChats", JSON.stringify([...recent, test]));
             window.dispatchEvent(new Event("recentChatsUpdated"));
             console.log("✅ 强制写入成功:", test);
           }}
