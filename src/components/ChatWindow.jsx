@@ -6,7 +6,6 @@ import { MessageBubble } from './MessageBubble';
 export default function ChatWindow() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
-  const [shouldSave, setShouldSave] = useState(false);
   const scrollRef = useRef(null);
 
   const sendMessage = () => {
@@ -39,7 +38,6 @@ export default function ChatWindow() {
   };
 
   const handleNewChat = () => {
-  setTimeout(() => {
     if (messages.length === 0) {
       console.log("⚠️ No messages to save.");
       setMessages([]);
@@ -48,37 +46,30 @@ export default function ChatWindow() {
     }
 
     console.log("🟣 Begin a New Chat triggered");
-    setShouldSave(true);
-  }, 100); // 延迟 100 毫秒，确保 messages 已更新
-};
 
-  useEffect(() => {
-    if (shouldSave && messages.length > 0) {
-      const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
-      const newEntry = {
-        id: Date.now(),
-        messages: messages.map((msg) => ({
-          sender: msg.sender,
-          text: msg.text || null,
-          image: msg.image || null,
-          timestamp: msg.timestamp,
-        })),
-      };
+    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+    const newEntry = {
+      id: Date.now(),
+      messages: messages.map((msg) => ({
+        sender: msg.sender,
+        text: msg.text || null,
+        image: msg.image || null,
+        timestamp: msg.timestamp,
+      })),
+    };
 
-      try {
-        localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
-        console.log("✅ Saved to localStorage:", [...recent, newEntry]);
-        window.dispatchEvent(new Event("recentChatsUpdated"));
-      } catch (e) {
-        console.error("❌ Failed to save to localStorage:", e);
-      }
-
-      setMessages([]);
-      setInput('');
-      setShouldSave(false);
-      console.log("🔄 New chat triggered from Sidebar");
+    try {
+      localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+      console.log("✅ Saved to localStorage:", [...recent, newEntry]);
+      window.dispatchEvent(new Event("recentChatsUpdated"));
+    } catch (e) {
+      console.error("❌ Failed to save to localStorage:", e);
     }
-  }, [shouldSave, messages]);
+
+    setMessages([]);
+    setInput('');
+    console.log("🔄 New chat triggered from Sidebar");
+  };
 
   useEffect(() => {
     const clearChat = () => handleNewChat();
