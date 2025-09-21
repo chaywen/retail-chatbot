@@ -15,7 +15,7 @@ export default function ChatWindow() {
       text: input,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
-    setMessages([...messages, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setInput('');
   };
 
@@ -25,9 +25,9 @@ export default function ChatWindow() {
       const newEntry = {
         id: Date.now(),
         messages: messages.map((msg) => ({
-          sender: msg.sender,
-          text: msg.text,
-          timestamp: msg.timestamp,
+          sender: msg.sender || (msg.user ? "user" : "bot"),
+          text: msg.text || msg.user || msg.bot,
+          timestamp: msg.timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         })),
       };
       localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
