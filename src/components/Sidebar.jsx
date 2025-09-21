@@ -11,26 +11,26 @@ export default function Sidebar() {
   const [recentChats, setRecentChats] = useState([]);
 
   useEffect(() => {
-  const loadChats = () => {
-    const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
+    const loadChats = () => {
+      const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
 
-    // ✅ 按时间戳倒序排列（最新在最上）
-    const sorted = Array.isArray(stored)
-      ? [...stored].sort((a, b) => b.id - a.id)
-      : [];
+      // ✅ 按时间戳倒序排列（最新在最上）
+      const sorted = Array.isArray(stored)
+        ? [...stored].sort((a, b) => b.id - a.id)
+        : [];
 
-    console.log("📥 Sidebar loaded chats:", sorted);
-    setRecentChats(sorted);
-  };
+      console.log("📥 Sidebar loaded chats:", sorted);
+      setRecentChats(sorted);
+    };
 
-  loadChats(); // 初始加载
-  window.addEventListener("recentChatsUpdated", loadChats); // 监听刷新事件
-  return () => window.removeEventListener("recentChatsUpdated", loadChats);
-}, []);
+    loadChats(); // 初始加载
+    window.addEventListener("recentChatsUpdated", loadChats); // 监听刷新事件
+    return () => window.removeEventListener("recentChatsUpdated", loadChats);
+  }, []);
 
   const handleNewChat = () => {
-    // ✅ 只清空 ChatWindow，不再保存
-    window.dispatchEvent(new CustomEvent("loadChat", { detail: { messages: [] } }));
+    // ✅ 改为触发保存逻辑
+    window.dispatchEvent(new Event("triggerNewChat"));
   };
 
   return (
