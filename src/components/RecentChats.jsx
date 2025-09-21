@@ -10,10 +10,9 @@ export default function RecentChats() {
       setRecentChats(Array.isArray(stored) ? [...stored] : []);
     };
 
-    loadChats(); // 初始加载
-
-    window.addEventListener("recentChatsUpdated", loadChats); // 监听事件
-    return () => window.removeEventListener("recentChatsUpdated", loadChats); // 清理监听
+    loadChats();
+    window.addEventListener("recentChatsUpdated", loadChats);
+    return () => window.removeEventListener("recentChatsUpdated", loadChats);
   }, []);
 
   return (
@@ -30,13 +29,5 @@ export default function RecentChats() {
 
             return (
               <div key={chat.id} className="border p-2 rounded shadow-sm">
-                <div className="font-bold text-xs text-gray-500 mb-1">{timestamp}</div>
-                <div className="text-xs text-gray-700">{preview.slice(0, 40)}</div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
+               
+
