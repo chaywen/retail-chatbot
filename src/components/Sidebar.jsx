@@ -13,17 +13,17 @@ export default function Sidebar() {
   useEffect(() => {
     const loadChats = () => {
       const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
-      console.log("📥 Sidebar loaded chats:", stored); // ✅ 调试输出
-      setRecentChats([...stored]); // ✅ 强制触发状态更新
+      console.log("📥 Sidebar loaded chats:", stored);
+      setRecentChats([...stored]); // 强制触发状态更新
     };
 
-    loadChats(); // 初始加载
-    window.addEventListener("recentChatsUpdated", loadChats); // 监听事件
-    return () => window.removeEventListener("recentChatsUpdated", loadChats); // 清理监听
+    loadChats();
+    window.addEventListener("recentChatsUpdated", loadChats);
+    return () => window.removeEventListener("recentChatsUpdated", loadChats);
   }, []);
 
   const handleNewChat = () => {
-    window.dispatchEvent(new Event("triggerNewChat")); // 通知 ChatWindow 清空
+    window.dispatchEvent(new Event("triggerNewChat"));
   };
 
   return (
