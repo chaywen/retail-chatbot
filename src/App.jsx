@@ -33,3 +33,4 @@ function App() {
 }
 
 export default App;
+export const API_URL = "https://nfhuqnv2h6.execute-api.us-east-1.amazonaws.com";
