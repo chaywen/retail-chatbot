@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import logo from '../assets/logo.svg';
 import {
   ChatBubbleLeftRightIcon,
   MagnifyingGlassIcon,
   PlusIcon,
 } from '@heroicons/react/24/outline';
+import logo from '../assets/logo.svg';
 import './sidebar.css';
 
 export default function Sidebar() {
@@ -17,13 +17,14 @@ export default function Sidebar() {
       setRecentChats(Array.isArray(stored) ? [...stored] : []);
     };
 
-    loadChats();
-    window.addEventListener("recentChatsUpdated", loadChats);
+    loadChats(); // 初始加载
+    window.addEventListener("recentChatsUpdated", loadChats); // 监听刷新事件
     return () => window.removeEventListener("recentChatsUpdated", loadChats);
   }, []);
 
   const handleNewChat = () => {
-    window.dispatchEvent(new Event("triggerNewChat"));
+    // ✅ 只清空 ChatWindow，不再保存
+    window.dispatchEvent(new CustomEvent("loadChat", { detail: { messages: [] } }));
   };
 
   return (
