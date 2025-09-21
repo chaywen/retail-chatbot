@@ -3,6 +3,7 @@ import logo from '../assets/logo.svg';
 import { InputBox } from './InputBox';
 import { MessageBubble } from './MessageBubble';
 import { sendMessageToBackend } from '../utils/api';
+import { API_URL } from "../App";
 
 export default function ChatWindow() {
   const [messages, setMessages] = useState([]);
