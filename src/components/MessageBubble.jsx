@@ -12,16 +12,19 @@ export const MessageBubble = ({ msg }) => {
       className={`flex ${isUser ? 'justify-end' : 'justify-start'} px-2`}
     >
       <div className={`flex items-end space-x-2 ${isUser ? 'flex-row-reverse' : ''}`}>
-        <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-md ${
-          isUser ? 'bg-gray-600' : 'bg-purple-600'
-        }`}>
+        <div className={`w-7 h-7 rounded-full flex items-center justify-center text-white text-[10px] font-bold shadow-md ${isUser ? 'bg-gray-600' : 'bg-purple-600'}`}>
           {isUser ? 'U' : 'A'}
         </div>
 
-        <div className={`max-w-sm px-4 py-2 rounded-2xl shadow-lg text-sm ${
-          isUser ? 'bg-gradient-to-br from-purple-700 to-purple-500 text-white' : 'bg-white text-gray-800'
-        }`}>
-          <div>{msg.text}</div>
+        <div className={`max-w-sm px-4 py-2 rounded-2xl shadow-lg text-sm ${isUser ? 'bg-gradient-to-br from-purple-700 to-purple-500 text-white' : 'bg-white text-gray-800'}`}>
+          {msg.text && <div>{msg.text}</div>}
+          {msg.image && (
+            <img
+              src={msg.image}
+              alt="Uploaded"
+              className="mt-2 rounded-lg max-w-xs"
+            />
+          )}
           <div className="text-[10px] text-gray-400 mt-1 text-right">{msg.timestamp}</div>
         </div>
       </div>
