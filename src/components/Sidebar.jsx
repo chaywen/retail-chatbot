@@ -14,7 +14,7 @@ export default function Sidebar() {
     const loadChats = () => {
       const stored = JSON.parse(localStorage.getItem("recentChats") || "[]");
       console.log("📥 Sidebar loaded chats:", stored);
-      setRecentChats([...stored]); // 强制触发状态更新
+      setRecentChats(Array.isArray(stored) ? [...stored] : []);
     };
 
     loadChats();
@@ -28,24 +28,20 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar-container">
-      {/* Logo */}
       <div className="logo-section">
         <img src={logo} alt="Logo" className="logo-image" />
       </div>
 
-      {/* New Chat Button */}
       <button className="sidebar-button primary" onClick={handleNewChat}>
         <PlusIcon className="h-5 w-5 mr-2" />
         Begin a New Chat
       </button>
 
-      {/* Search Box */}
       <div className="search-box">
         <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
         <input type="text" placeholder="Search..." className="search-input" />
       </div>
 
-      {/* Categories */}
       <div className="category-section">
         <p className="category-title">Categories</p>
         <ul className="category-list">
@@ -58,7 +54,6 @@ export default function Sidebar() {
         </ul>
       </div>
 
-      {/* Recent Chats */}
       <div className="recent-section">
         <p className="category-title">Recent Chats</p>
         <ul className="recent-list">
