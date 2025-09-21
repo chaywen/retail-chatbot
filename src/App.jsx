@@ -1,4 +1,3 @@
-const API_URL = "https://nfhuqnv2h6.execute-api.us-east-1.amazonaws.com";
 import { useState } from "react";
 import Draggable from "react-draggable";
 import Sidebar from './components/Sidebar';
@@ -33,4 +32,3 @@ function App() {
 }
 
 export default App;
-export const API_URL = "https://nfhuqnv2h6.execute-api.us-east-1.amazonaws.com";
