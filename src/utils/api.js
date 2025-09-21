@@ -1,19 +1,13 @@
-const API_URL = "https://nfhuqnv2h6.execute-api.us-east-1.amazonaws.com";
+// src/utils/api.js
+export const sendMessage = async (message) => {
+  const res = await fetch(process.env.REACT_APP_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ message }),
+  });
 
-export async function sendMessage(message) {
-  try {
-    const response = await fetch(`${API_URL}/chat`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message })
-    });
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("API call failed:", error);
-    return { text: "Error: Unable to connect to backend." };
-  }
-}
+  if (!res.ok) throw new Error('API error');
+  return res.json();
+};
