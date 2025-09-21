@@ -8,7 +8,8 @@ export const sendMessageToBackend = async (message) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ text: message, userId: "web-user" }),
+
     });
 
     if (!res.ok) {
