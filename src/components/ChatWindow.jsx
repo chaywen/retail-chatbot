@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import logo from '../assets/logo.svg';
 import { InputBox } from './InputBox';
@@ -21,25 +20,39 @@ export default function ChatWindow() {
       }),
     };
 
-    const newMessages = [...messages, userMessage];
-    setMessages(newMessages);
+    setMessages((prev) => [...prev, userMessage]);
     setInput('');
-
-    // ✅ 自动保存到 localStorage
-    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
-    const newEntry = {
-      id: Date.now(),
-      messages: newMessages,
-    };
-    localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
-    window.dispatchEvent(new Event("recentChatsUpdated"));
-    console.log("✅ 自动保存成功:", newEntry);
   };
 
   const handleNewChat = () => {
-    // ✅ 不再保存，只清空
+    if (messages.length === 0) {
+      console.log("⚠️ No messages to save.");
+      setMessages([]);
+      setInput('');
+      return;
+    }
+
+    const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
+    const newEntry = {
+      id: Date.now(),
+      messages: messages.map((msg) => ({
+        sender: msg.sender,
+        text: msg.text,
+        timestamp: msg.timestamp,
+      })),
+    };
+
+    try {
+      localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
+      console.log("✅ Saved to localStorage:", [...recent, newEntry]);
+      window.dispatchEvent(new Event("recentChatsUpdated"));
+    } catch (e) {
+      console.error("❌ Failed to save to localStorage:", e);
+    }
+
     setMessages([]);
     setInput('');
+    console.log("🔄 New chat triggered from Sidebar");
   };
 
   useEffect(() => {
