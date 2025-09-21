@@ -7,20 +7,22 @@ function App() {
   const [showChatUI, setShowChatUI] = useState(false);
 
   return (
-    <div className="w-screen h-screen bg-gray-100">
+    <div className="relative w-screen h-screen bg-gray-100 overflow-hidden">
       {/* 💬 Draggable Floating Button */}
-      <Draggable>
-        <button
-          onClick={() => setShowChatUI(!showChatUI)}
-          className="fixed bottom-4 right-4 bg-purple-600 text-white p-3 rounded-full shadow-lg z-[9999]"
-        >
-          💬
-        </button>
+      <Draggable bounds="parent">
+        <div className="fixed bottom-4 right-4 z-[9999]">
+          <button
+            onClick={() => setShowChatUI(!showChatUI)}
+            className="bg-purple-600 text-white p-3 rounded-full shadow-lg hover:bg-purple-700 transition"
+          >
+            💬
+          </button>
+        </div>
       </Draggable>
 
       {/* 🧠 Full Chat UI */}
       {showChatUI && (
-        <div className="fixed inset-0 flex flex-col md:flex-row bg-white z-[9998]">
+        <div className="fixed inset-0 z-[9998] flex flex-col md:flex-row bg-white shadow-xl">
           <Sidebar />
           <ChatWindow />
         </div>
