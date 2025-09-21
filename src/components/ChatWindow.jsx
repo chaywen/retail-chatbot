@@ -39,6 +39,7 @@ export default function ChatWindow() {
   };
 
   const handleNewChat = () => {
+  setTimeout(() => {
     if (messages.length === 0) {
       console.log("⚠️ No messages to save.");
       setMessages([]);
@@ -48,7 +49,8 @@ export default function ChatWindow() {
 
     console.log("🟣 Begin a New Chat triggered");
     setShouldSave(true);
-  };
+  }, 100); // 延迟 100 毫秒，确保 messages 已更新
+};
 
   useEffect(() => {
     if (shouldSave && messages.length > 0) {
