@@ -3,7 +3,7 @@ import './input.css';
 import { SendButton } from './SendButton';
 import { FiMic, FiPaperclip } from 'react-icons/fi';
 
-export const InputBox = ({ value, onChange, onSend }) => {
+export const InputBox = ({ value, onChange, onSend, onSendImage }) => {
   const fileInputRef = useRef(null);
 
   const handleKeyDown = (e) => {
@@ -19,29 +19,30 @@ export const InputBox = ({ value, onChange, onSend }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log('Uploaded file:', file.name);
-      // 可在此处触发上传逻辑
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (onSendImage) {
+          onSendImage(reader.result); // base64 image string
+        }
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleVoiceClick = () => {
     console.log('Voice input triggered');
-    // 可在此处集成语音识别逻辑
   };
 
   return (
     <div className="input-container glassmorphism">
-      {/* Voice Button */}
       <button className="icon-button" onClick={handleVoiceClick} aria-label="Voice">
         <FiMic size={18} />
       </button>
 
-      {/* Upload Button */}
       <button className="icon-button" onClick={handleFileClick} aria-label="Upload">
         <FiPaperclip size={18} />
       </button>
 
-      {/* Text Input */}
       <input
         type="text"
         value={value}
@@ -51,12 +52,11 @@ export const InputBox = ({ value, onChange, onSend }) => {
         className="input-field"
       />
 
-      {/* Send Button */}
       <SendButton onClick={onSend} disabled={!value.trim()} />
 
-      {/* Hidden File Input */}
       <input
         type="file"
+        accept="image/*"
         ref={fileInputRef}
         style={{ display: 'none' }}
         onChange={handleFileChange}
