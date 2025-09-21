@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import logo from '../assets/logo.svg';
 import { InputBox } from './InputBox';
 import { MessageBubble } from './MessageBubble';
+import { sendMessageToBackend } from '../utils/api';
 
 export default function ChatWindow() {
   const [messages, setMessages] = useState([]);
