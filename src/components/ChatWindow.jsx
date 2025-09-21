@@ -132,42 +132,7 @@ export default function ChatWindow() {
         <InputBox value={input} onChange={setInput} onSend={sendMessage} />
       </div>
 
-      {/* Force Save Button for Debugging */}
-      <div className="mt-4 px-4">
-        <button
-          onClick={() => {
-            const test = {
-              id: Date.now(),
-              messages: [
-                {
-                  sender: "user",
-                  text: "这是测试消息",
-                  timestamp: new Date().toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }),
-                },
-                {
-                  sender: "bot",
-                  text: "这是自动回复",
-                  timestamp: new Date().toLocaleTimeString([], {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  }),
-                },
-              ],
-            };
-
-            const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
-            localStorage.setItem("recentChats", JSON.stringify([...recent, test]));
-            window.dispatchEvent(new Event("recentChatsUpdated"));
-            console.log("✅ 强制写入成功:", test);
-          }}
-          className="bg-purple-600 text-white text-xs px-3 py-1 rounded hover:bg-purple-700 transition"
-        >
-          Force Save Test Chat
-        </button>
-      </div>
+      
     </div>
   );
 }
