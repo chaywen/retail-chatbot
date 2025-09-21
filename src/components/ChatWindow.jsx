@@ -8,9 +8,9 @@ export default function ChatWindow() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const scrollRef = useRef(null);
-  const latestMessagesRef = useRef([]); // ✅ 实时追踪消息副本
+  const latestMessagesRef = useRef([]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = {
@@ -29,6 +29,39 @@ export default function ChatWindow() {
     });
 
     setInput('');
+
+    try {
+      const response = await sendMessageToBackend(input);
+      const botMessage = {
+        sender: 'bot',
+        text: response.reply || 'No response',
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      };
+
+      setMessages((prev) => {
+        const updated = [...prev, botMessage];
+        latestMessagesRef.current = updated;
+        return updated;
+      });
+    } catch (err) {
+      const errorMessage = {
+        sender: 'bot',
+        text: '⚠️ Failed to connect to server.',
+        timestamp: new Date().toLocaleTimeString([], {
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      };
+
+      setMessages((prev) => {
+        const updated = [...prev, errorMessage];
+        latestMessagesRef.current = updated;
+        return updated;
+      });
+    }
   };
 
   const sendImage = (imageDataUrl) => {
@@ -52,13 +85,10 @@ export default function ChatWindow() {
     const currentMessages = latestMessagesRef.current;
 
     if (currentMessages.length === 0) {
-      console.log("⚠️ No messages to save.");
       setMessages([]);
       setInput('');
       return;
     }
-
-    console.log("🟣 Begin a New Chat triggered");
 
     const recent = JSON.parse(localStorage.getItem("recentChats") || "[]");
     const newEntry = {
@@ -73,7 +103,6 @@ export default function ChatWindow() {
 
     try {
       localStorage.setItem("recentChats", JSON.stringify([...recent, newEntry]));
-      console.log("✅ Saved to localStorage:", [...recent, newEntry]);
       window.dispatchEvent(new Event("recentChatsUpdated"));
     } catch (e) {
       console.error("❌ Failed to save to localStorage:", e);
@@ -82,7 +111,6 @@ export default function ChatWindow() {
     setMessages([]);
     setInput('');
     latestMessagesRef.current = [];
-    console.log("🔄 New chat triggered from Sidebar");
   };
 
   useEffect(() => {
@@ -96,7 +124,7 @@ export default function ChatWindow() {
       const chat = e.detail;
       if (Array.isArray(chat.messages)) {
         setMessages(chat.messages);
-        latestMessagesRef.current = chat.messages; // ✅ 同步副本
+        latestMessagesRef.current = chat.messages;
       }
     };
 
